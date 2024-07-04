@@ -65,11 +65,8 @@ export const crawlNewsLinks = async (url: string) => {
           ],
           defaultViewport: chromium.defaultViewport,
           executablePath: await chromium.executablePath(
-            `${process.env.NEXT_PUBLIC_CDN_LINK}`
+            `${process.env.NEXT_PUBLIC_CDN_LINK}/chromium-v119.0.2-pack.tar`
           ),
-          // executablePath: await chromium.executablePath(
-          //   `${process.env.NEXT_PUBLIC_CDN_LINK}/chromium/chromium-v119.0.2-pack.tar`
-          // ),
           headless: chromium.headless,
           ignoreHTTPSErrors: true,
         }
