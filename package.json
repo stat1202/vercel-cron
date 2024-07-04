@@ -11,14 +11,20 @@
   "dependencies": {
     "@supabase/ssr": "^0.4.0",
     "@supabase/supabase-js": "^2.44.2",
+    "cheerio": "^1.0.0-rc.12",
+    "compromise": "^14.13.0",
+    "deepl-node": "^1.13.0",
     "next": "14.2.4",
+    "puppeteer": "^22.12.1",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "similarity": "^1.2.1"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/similarity": "^1.2.3",
     "eslint": "^8",
     "eslint-config-next": "14.2.4",
     "postcss": "^8",
