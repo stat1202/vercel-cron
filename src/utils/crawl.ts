@@ -1,5 +1,6 @@
 import { load } from "cheerio";
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core";
+import chromium from "@sparticuz/chromium-min";
 
 export const getHTML = async (url: string) => {
   try {
@@ -40,11 +41,46 @@ export const crawlNewsDetail = (html: string) => {
   return { title_en, publisher, thumbnail, published_at, content_en };
 };
 
+// background에서 브라우저를 열어서 내용을 가져오는 함수
 export const crawlNewsLinks = async (url: string) => {
-  const browser = await puppeteer.launch({ headless: true });
-  const page = await browser.newPage();
-  await page.goto(url);
+  chromium.setHeadlessMode = true;
+  chromium.setGraphicsMode = false;
 
+  // 크로미움으로 브라우저를 연다.
+  const browser = await puppeteer.launch(
+    process.env.NODE_ENV === "development"
+      ? // 로컬 실행 환경
+        {
+          headless: true,
+          executablePath: process.env.NEXT_LOCAL_CHROME_PATH,
+        }
+      : // 서버 실행 환경
+        {
+          args: [
+            ...chromium.args,
+            "--hide-scrollbars",
+            "--disable-web-security",
+            "--no-sandbox",
+            "--disable-setuid-sandbox",
+          ],
+          defaultViewport: chromium.defaultViewport,
+          executablePath: await chromium.executablePath(
+            `${process.env.NEXT_PUBLIC_CDN_LINK}/chromium/chromium-v119.0.2-pack.tar`
+          ),
+          headless: chromium.headless,
+          ignoreHTTPSErrors: true,
+        }
+  );
+
+  // 페이지 열기
+  const page = await browser.newPage();
+
+  // 링크 이동
+  await page.goto(url, {
+    waitUntil: "networkidle2", // 500ms 동안 두 개 이상의 네트워크 연결이 없을 때 탐색이 완료되는 것으로 간주
+  });
+
+  //4. HTML 정보 가지고 온다.
   try {
     // 스크롤 동작
     let originalOffset = 0;
