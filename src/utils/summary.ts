@@ -12,7 +12,10 @@ export const summarizeNews = async (content_en: string) => {
     temperature,
     top_p
   )) as string;
-  const summary = removeIncompleteSentences(answer);
+  const answerSplit = answer
+    ? answer.split(":")[1]
+    : "Please hold on a moment. We're summarizing this news.";
+  const summary = removeIncompleteSentences(answerSplit);
   return summary;
 };
 

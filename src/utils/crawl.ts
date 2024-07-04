@@ -25,7 +25,7 @@ export const getHTML = async (url: string) => {
 
 export const crawlNewsDetail = (html: string) => {
   const $ = load(html);
-  const title_en = $("h1#cass-lead-header-undefined").text();
+  const title_en = $("div.caas-title-wrapper").text();
   const publisher = $("div.caas-attr-item-author").text();
   const alt = $("img.caas-img").eq(1).attr("alt");
   const thumbnail = alt ? null : $("img.caas-img").eq(1).attr("src");
