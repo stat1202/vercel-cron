@@ -4,7 +4,14 @@ import { summarizeNews } from "@/utils/summary";
 import { createClient } from "@/utils/supabase/server";
 import { translate } from "@/utils/translate";
 export async function GET(requset: Request) {
-  cronJob();
+  const supabase = createClient();
+  const { error } = await supabase
+    .from("cron-test")
+    .insert({ text: "cron start" });
+
+  setTimeout(async () => {
+    await cronJob();
+  }, 0);
 
   return Response.json({ message: "ok" });
 }
