@@ -4,6 +4,12 @@ import { summarizeNews } from "@/utils/summary";
 import { createClient } from "@/utils/supabase/server";
 import { translate } from "@/utils/translate";
 export async function GET(requset: Request) {
+  cronJob();
+
+  return Response.json({ message: "ok" });
+}
+
+const cronJob = async () => {
   /*
   ----- 크롤링한 뉴스 db에 저장 작업 시작
   */
@@ -68,6 +74,4 @@ export async function GET(requset: Request) {
       updateRelatedStock();
     }
   }
-
-  return Response.json({ message: "ok" });
-}
+};
