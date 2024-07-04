@@ -22,9 +22,14 @@ const cronJob = async () => {
   */
   const targetUrl = "https://finance.yahoo.com/topic/tech/";
   const newsLinks = (await crawlNewsLinks(targetUrl)) as string[];
-  const newsList = [];
   // // db에 있는 최신 뉴스 호출
   const supabase = createClient();
+
+  const { error: crawlLinksError } = await supabase
+    .from("cron-test")
+    .insert({ text: `뉴스 링크 크롤링 완료.` });
+  const newsList = [];
+
   const { data: latestNews, error: selectLatestNewsError } = await supabase
     .from("news")
     .select("origin_url")
@@ -77,7 +82,7 @@ const cronJob = async () => {
       const news = {
         ...initNewsData,
         summary_en,
-        // ...translateNews,
+        ...translateNews,
       };
       // newsList.push(news);
       const { error: insertNewsListError } = await supabase
