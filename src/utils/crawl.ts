@@ -65,7 +65,7 @@ export const crawlNewsLinks = async (url: string) => {
           ],
           defaultViewport: chromium.defaultViewport,
           executablePath: await chromium.executablePath(
-            `${process.env.NEXT_PUBLIC_CDN_LINK}/chromium-v119.0.2-pack.tar`
+            `${process.env.NEXT_PUBLIC_CDN_LINK}`
           ),
           headless: chromium.headless,
           ignoreHTTPSErrors: true,
@@ -105,7 +105,7 @@ export const crawlNewsLinks = async (url: string) => {
 
     return newsLinks;
   } catch (error) {
-    console.error("Crawl NewsLink Failed : ", error);
+    throw new Error(`Crawl NewsLink Failed :  ${error}`);
   } finally {
     await browser.close();
   }
