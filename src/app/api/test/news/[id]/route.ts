@@ -28,9 +28,9 @@ export async function GET(
     const { error: endError } = await supabase
       .from("cron-test")
       .insert({ text: `news-${id} 종료` });
-    // const { error: insertNewsListError } = await supabase
-    //   .from("news")
-    //   .insert(news);
+    const { error: insertNewsListError } = await supabase
+      .from("news")
+      .insert(news);
     return Response.redirect(
       `${process.env.API_URL}/api/test/news/${id + 1}?data=${JSON.stringify(
         newsList
