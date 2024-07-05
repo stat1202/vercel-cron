@@ -3,17 +3,15 @@ import { crawlNewsDetail, crawlNewsLinks, getHTML } from "@/utils/crawl";
 import { summarizeNews } from "@/utils/summary";
 import { createClient } from "@/utils/supabase/server";
 import { translate } from "@/utils/translate";
+import { NextResponse } from "next/server";
 export async function GET(requset: Request) {
   const supabase = createClient();
   const { error } = await supabase
     .from("cron-test")
     .insert({ text: "cron start" });
+  await cronJob();
 
-  setTimeout(async () => {
-    await cronJob();
-  }, 0);
-
-  return Response.json({ message: "ok" });
+  return NextResponse.json({ message: "ok" });
 }
 
 const cronJob = async () => {
@@ -125,3 +123,4 @@ const cronJob = async () => {
     // }
   }
 };
+export const dynamic = "force-dynamic";
