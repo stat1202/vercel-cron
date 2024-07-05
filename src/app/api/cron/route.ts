@@ -10,6 +10,9 @@ export async function GET(requset: Request) {
     .from("cron-test")
     .insert({ text: "cron start" });
 
+  setTimeout(async () => {
+    await cronJob();
+  }, 0);
   await cronJob();
 
   return NextResponse.json({ message: "ok" });
@@ -70,11 +73,11 @@ const cronJob = async () => {
         .insert({ text: `${i} / ${duplicateIndex} 요약 완료.` });
 
       // 번역
-      const translateNews = await translate(
-        initNewsData.title_en,
-        initNewsData.content_en,
-        summary_en
-      );
+      // const translateNews = await translate(
+      //   initNewsData.title_en,
+      //   initNewsData.content_en,
+      //   summary_en
+      // );
 
       // 로그
       const { error: translateError } = await supabase
@@ -84,7 +87,7 @@ const cronJob = async () => {
       const news = {
         ...initNewsData,
         summary_en,
-        ...translateNews,
+        // ...translateNews,
       };
       // newsList.push(news);
       const { error: insertNewsListError } = await supabase

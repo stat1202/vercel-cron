@@ -80,6 +80,8 @@ export const crawlNewsLinks = async (url: string) => {
     waitUntil: "networkidle2", // 500ms 동안 두 개 이상의 네트워크 연결이 없을 때 탐색이 완료되는 것으로 간주
   });
 
+  await page.setViewport({ width: 600, height: 13500 });
+
   //4. HTML 정보 가지고 온다.
   try {
     // 스크롤 동작

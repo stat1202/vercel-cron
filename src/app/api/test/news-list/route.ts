@@ -16,11 +16,7 @@ export async function GET(request: NextRequest) {
     .from("cron-test")
     .insert({ text: "news-list 종료" });
 
-  return NextResponse.redirect(
-    `${process.env.API_URL}/api/test/news/0?data=${encodeURIComponent(
-      JSON.stringify(data)
-    )}`
-  );
+  return Response.json(data);
 }
 
 export const dynamic = "force-dynamic";
