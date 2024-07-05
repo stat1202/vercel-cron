@@ -5,8 +5,9 @@ export async function GET(request: NextRequest) {
   const targetUrl = "https://finance.yahoo.com/topic/tech/";
   const data = await crawlNewsLinks(targetUrl);
   return NextResponse.redirect(
-    "http://localhost:3000/api/test/news/0?data=" +
-      encodeURIComponent(JSON.stringify(data))
+    `${process.env.API_URL}/api/test/news/0?data=${encodeURIComponent(
+      JSON.stringify(data)
+    )}`
   );
 }
 

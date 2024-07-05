@@ -24,7 +24,7 @@ export async function GET(
     //   .from("news")
     //   .insert(news);
     return Response.redirect(
-      `http://localhost:3000/api/test/news/${id + 1}?data=${JSON.stringify(
+      `${process.env.API_URL}/api/test/news/${id + 1}?data=${JSON.stringify(
         newsList
       )}`
     );
