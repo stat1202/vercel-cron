@@ -9,7 +9,10 @@ export async function GET(requset: Request) {
   const { error } = await supabase
     .from("cron-test")
     .insert({ text: "cron start" });
-  await cronJob();
+
+  setTimeout(async () => {
+    await cronJob();
+  }, 0);
 
   return NextResponse.json({ message: "ok" });
 }
