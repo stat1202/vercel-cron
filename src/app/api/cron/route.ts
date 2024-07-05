@@ -10,7 +10,7 @@ export async function GET(requset: Request) {
     .from("cron-test")
     .insert({ text: "cron start" });
 
-  cronJob();
+  await cronJob();
 
   return NextResponse.json({ message: "ok" });
 }
@@ -125,3 +125,4 @@ const cronJob = async () => {
   }
 };
 export const dynamic = "force-dynamic";
+export const maxDuration = 6000;
