@@ -14,12 +14,20 @@ export async function GET(
 
   if (id < length) {
     const supabase = createClient();
+
+    const { error: startError } = await supabase
+      .from("cron-test")
+      .insert({ text: `news-${id} 시작` });
+
     const html = (await getHTML(newsList[id])) as string;
     const initNewsData = crawlNewsDetail(html);
     const summary_en = await summarizeNews(initNewsData.content_en);
 
     const news = { ...initNewsData, summary_en, origin_url: newsList[id] };
 
+    const { error: endError } = await supabase
+      .from("cron-test")
+      .insert({ text: `news-${id} 종료` });
     // const { error: insertNewsListError } = await supabase
     //   .from("news")
     //   .insert(news);
