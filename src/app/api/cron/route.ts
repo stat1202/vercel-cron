@@ -10,7 +10,7 @@ export async function GET(requset: Request) {
     .from("cron-test")
     .insert({ text: "cron start" });
 
-  await cronJob();
+  cronJob();
 
   return NextResponse.json({ message: "ok" });
 }
