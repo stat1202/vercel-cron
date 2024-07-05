@@ -20,10 +20,13 @@ const cronJob = async () => {
   /*
   ----- 크롤링한 뉴스 db에 저장 작업 시작
   */
+  const supabase = createClient();
+  const { error: cronJobError } = await supabase
+    .from("cron-test")
+    .insert({ text: `cronJob 진입.` });
   const targetUrl = "https://finance.yahoo.com/topic/tech/";
   const newsLinks = (await crawlNewsLinks(targetUrl)) as string[];
   // // db에 있는 최신 뉴스 호출
-  const supabase = createClient();
 
   const { error: crawlLinksError } = await supabase
     .from("cron-test")
