@@ -13,7 +13,6 @@ export async function GET(requset: Request) {
   setTimeout(async () => {
     await cronJob();
   }, 0);
-  await cronJob();
 
   return NextResponse.json({ message: "ok" });
 }
